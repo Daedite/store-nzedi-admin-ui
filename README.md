@@ -1,6 +1,18 @@
-# Getting Started with Create React App
+# TIM-ADMIN-UI
+Admin frontend of timtube-api that's currently running. The following image is an example of how it will
+look.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Example of Home page](./public/misc/dashboard.png)
+
+## Description
+Tim-admin-ui allows an admin of timtube to interact with the system in performing the following actions:
++ Login and out.
++ Upload videos to the system.
++ Update video details.
++ Activate a video to be on the channel
++ Activate agents.
++ Deactivate agent.
+
 
 ## Available Scripts
 
