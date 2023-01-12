@@ -61,3 +61,22 @@ We are using React-Bootstrap. You should import individual components like: reac
  
 Use the following link to get bootstrap components and learn how to use react-bootstrap.
 https://react-bootstrap.github.io/components/alerts/
+
+## React-Router-Dom
+React Router enables "client side routing".
+For more explanations please follow the link below.
+
+https://reactrouter.com/en/main/start/overview
+
+## React icon
+React-icons is a small library that helps you add icons (from all different icon libraries) 
+to your React apps. It delivers the icons to your app as components so they're easier to work 
+with, and it lets you style them, so they're consistent with the overall style of your app.
+
+Read how to use it.
+
+https://www.freecodecamp.org/news/how-to-use-react-icons/
+Where you can find icons,
+
+https://react-icons.github.io/react-icons/icons?name=fa
+
