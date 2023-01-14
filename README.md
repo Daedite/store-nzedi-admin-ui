@@ -51,32 +51,32 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Bootstrap
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+We are using React-Bootstrap. You should import individual components like: react-bootstrap/Button rather than the entire library. Doing so pulls in only the specific components that you use, which can significantly reduce the amount of code you end up sending to the client.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+ ` import Button from 'react-bootstrap/Button';`
 
-### Code Splitting
+ ` import { Button } from 'react-bootstrap';`
+ 
+Use the following link to get bootstrap components and learn how to use react-bootstrap.
+https://react-bootstrap.github.io/components/alerts/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## React-Router-Dom
+React Router enables "client side routing".
+For more explanations please follow the link below.
 
-### Analyzing the Bundle Size
+https://reactrouter.com/en/main/start/overview
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## React icon
+React-icons is a small library that helps you add icons (from all different icon libraries) 
+to your React apps. It delivers the icons to your app as components so they're easier to work 
+with, and it lets you style them, so they're consistent with the overall style of your app.
 
-### Making a Progressive Web App
+Read how to use it.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+https://www.freecodecamp.org/news/how-to-use-react-icons/
+Where you can find icons,
 
-### Advanced Configuration
+https://react-icons.github.io/react-icons/icons?name=fa
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
