@@ -35,16 +35,64 @@ export default function LandingPage(){
                     </Card>
                 </Col>
                 <Col>
-                    <Card></Card>
+
+                    <Card>
+                        <Row className="m-1">
+                            <Col md={8}>
+                                <h4>101.K</h4>
+                                <h6>Downloads</h6>
+                                <a>101.K</a>
+                            </Col>
+                            <Col md={4} className=" text-center m-auto mr-1">
+                                <div className="purpleCardIcon ">
+                                    <FaDownload  />
+                                </div>
+
+                            </Col>
+
+                        </Row>
+
+                    </Card>
                 </Col>
                 <Col>
-                    <Card></Card>
+
+                    <Card>
+                        <Row className="m-1">
+                            <Col md={8}>
+                                <h4>101.K</h4>
+                                <h6>Downloads</h6>
+                                <a>101.K</a>
+                            </Col>
+                            <Col md={4} className=" text-center m-auto mr-1">
+                                <div className="purpleCardIcon ">
+                                    <FaDownload  />
+                                </div>
+
+                            </Col>
+
+                        </Row>
+
+                    </Card>
                 </Col>
                 <Col>
-                    <Card></Card>
-                </Col>
-                <Col>
-                    <Card></Card>
+
+                    <Card>
+                        <Row className="m-1">
+                            <Col md={8}>
+                                <h4>101.K</h4>
+                                <h6>Downloads</h6>
+                                <a>101.K</a>
+                            </Col>
+                            <Col md={4} className=" text-center m-auto mr-1">
+                                <div className="purpleCardIcon ">
+                                    <FaDownload  />
+                                </div>
+
+                            </Col>
+
+                        </Row>
+
+                    </Card>
                 </Col>
             </Row>
             <Row style={{height:"300px"}}>

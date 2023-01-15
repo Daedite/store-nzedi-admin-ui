@@ -82,3 +82,5 @@ Where you can find icons,
 
 https://react-icons.github.io/react-icons/icons?name=fa
 
+### Chart
+https://recharts.org/en-US/examples/PieChartWithCustomizedLabel
