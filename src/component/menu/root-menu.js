@@ -1,5 +1,5 @@
 import {Card, Col, Container, Nav, Navbar, NavDropdown, Row} from "react-bootstrap";
-import { FaHouseUser, FaUserAlt, FaVideo } from "react-icons/fa";
+import { FaHouseUser, FaUserAlt, FaVideo,FcAddRow } from "react-icons/fa";
 import './root-menu.css';
 
 export default function RootMenu(){

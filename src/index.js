@@ -12,35 +12,35 @@ import VideoPage from "./component/pages/dashboard-pages/video/video-page";
 
 const router = createBrowserRouter([
     {
-        path:"/",
+        path: "/",
         element: < App/>,
-        errorElement: <ErrorPage />
+        errorElement: <ErrorPage/>
     },
     {
-        path:"/home",
-        element:< DashboardPage/>,
-        children:[
+        path: "/home",
+        element: < DashboardPage/>,
+        children: [
             {
-                path:"",
-                element: < LandingPage />
+                path: "",
+                element: < LandingPage/>
             },
             {
-                path:"user",
-                element: < UserPage />
+                path: "user",
+                element: < UserPage/>
             },
             {
-                path:"video",
-                element: < VideoPage />
+                path: "video",
+                element: < VideoPage/>
             },
         ]
     }
 ])
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <div style={{height:"100vh"}}>
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+    <div style={{height: "100vh"}}>
+        <React.StrictMode>
+            <RouterProvider router={router}/>
+        </React.StrictMode>
     </div>
 );
 

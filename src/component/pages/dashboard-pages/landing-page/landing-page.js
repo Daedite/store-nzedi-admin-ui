@@ -13,39 +13,40 @@ const cardData = [
 export default function LandingPage(){
     return (
         <Container>
-            {/*<Row style={{height:"100px"}}>*/}
-            {/*    <Col>*/}
-            {/*        <Card>*/}
-            {/*            <Row>*/}
-            {/*                <Col md={8}>*/}
-            {/*                    <h3>101.K</h3>*/}
-            {/*                    <h6>101.K</h6>*/}
-            {/*                    <h6>101.K</h6>*/}
-            {/*                </Col>*/}
-            {/*                <Col md={4} className=" text-center m-auto mr-1">*/}
-            {/*                    <div className="purpleCardIcon ">*/}
-            {/*                        <FaDownload  />*/}
-            {/*                    </div>*/}
+            <Row className="mb-2" style={{height:"100px"}}>
+                <Col>
 
-            {/*                </Col>*/}
+                    <Card>
+                        <Row className="m-1">
+                            <Col md={8}>
+                                <h4>101.K</h4>
+                                <h6>Downloads</h6>
+                                <a>101.K</a>
+                            </Col>
+                            <Col md={4} className=" text-center m-auto mr-1">
+                                <div className="purpleCardIcon ">
+                                    <FaDownload  />
+                                </div>
 
-            {/*            </Row>*/}
+                            </Col>
 
-            {/*        </Card>*/}
-            {/*    </Col>*/}
-            {/*    <Col>*/}
-            {/*        <Card></Card>*/}
-            {/*    </Col>*/}
-            {/*    <Col>*/}
-            {/*        <Card></Card>*/}
-            {/*    </Col>*/}
-            {/*    <Col>*/}
-            {/*        <Card></Card>*/}
-            {/*    </Col>*/}
-            {/*    <Col>*/}
-            {/*        <Card></Card>*/}
-            {/*    </Col>*/}
-            {/*</Row>*/}
+                        </Row>
+
+                    </Card>
+                </Col>
+                <Col>
+                    <Card></Card>
+                </Col>
+                <Col>
+                    <Card></Card>
+                </Col>
+                <Col>
+                    <Card></Card>
+                </Col>
+                <Col>
+                    <Card></Card>
+                </Col>
+            </Row>
             <Row style={{height:"300px"}}>
                 <Col md={8}>
                     <Card style={{height:"100%"}}>
