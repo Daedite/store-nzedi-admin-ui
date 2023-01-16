@@ -9,6 +9,7 @@ import DashboardPage from "./component/pages/dashboard-pages/dashboard-page";
 import LandingPage from "./component/pages/dashboard-pages/landing-page/landing-page";
 import UserPage from "./component/pages/dashboard-pages/user/user-page";
 import VideoPage from "./component/pages/dashboard-pages/video/video-page";
+import ViewVideoDetail from "./component/pages/dashboard-pages/video/view-video-detail";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,11 @@ const router = createBrowserRouter([
             {
                 path: "video",
                 element: < VideoPage/>
+            },
+            {
+                path: "video-view/:videoId",
+                element: < ViewVideoDetail/>,
+                // loader: videoIdLoader
             },
         ]
     }
