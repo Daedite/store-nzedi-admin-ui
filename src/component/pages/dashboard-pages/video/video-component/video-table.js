@@ -1,5 +1,6 @@
 import {Button, Table} from "react-bootstrap";
 import {Navigate, redirect, useNavigate} from "react-router-dom";
+import {GrFormView} from "react-icons/gr";
 
 export default function VideoTable(){
     const videoTable = [
@@ -39,7 +40,9 @@ function TableContents(props) {
             <td>{props.title}</td>
             <td>{props.size}</td>
             <td>{props.like}</td>
-            <td><Button onClick={(e) => handleClick(props.id)}>View</Button></td>
+            <td className="text-center"><Button onClick={(e) => handleClick(props.id)} title="View details">
+                <GrFormView size="20px"/>
+            </Button></td>
         </tr>
     )
 }
