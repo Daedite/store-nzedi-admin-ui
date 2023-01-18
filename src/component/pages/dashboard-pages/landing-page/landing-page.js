@@ -99,9 +99,9 @@ export default function LandingPage(){
                 <Col md={8}>
                     <Card style={{height:"100%"}}>
                         <CardHeader>
-                            <Text>
+                            <h4>
                                 Video per Category
-                            </Text>
+                            </h4>
                         </CardHeader>
                         <Example/>
                     </Card>
@@ -110,9 +110,9 @@ export default function LandingPage(){
                 <Col md={4}>
                     <Card style={{height:"100%"}}>
                         <CardHeader>
-                            <Text>
+                            <h4>
                                 Video per Category
-                            </Text>
+                            </h4>
                         </CardHeader>
                         <PieChartSegment/>
                     </Card>
