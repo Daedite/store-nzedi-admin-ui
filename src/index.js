@@ -11,6 +11,7 @@ import UserPage from "./component/pages/dashboard-pages/user/user-page";
 import VideoPage from "./component/pages/dashboard-pages/video/video-page";
 import ViewVideoDetail from "./component/pages/dashboard-pages/video/view-video-detail";
 import VideoCreateForm from "./component/pages/dashboard-pages/video/video-component/video-create-form";
+import ProfilePage from "./component/profile/profile-page";
 
 const router = createBrowserRouter([
     {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
             {
                 path: "video-create",
                 element: < VideoCreateForm/>,
+            },
+            {
+                path: "profile/:email",
+                element: < ProfilePage/>,
             },
         ]
     }
