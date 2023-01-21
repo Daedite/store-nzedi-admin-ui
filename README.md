@@ -51,6 +51,8 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
+### `npm install`
+
 ## Bootstrap
 
 We are using React-Bootstrap. You should import individual components like: react-bootstrap/Button rather than the entire library. Doing so pulls in only the specific components that you use, which can significantly reduce the amount of code you end up sending to the client.
@@ -80,3 +82,5 @@ Where you can find icons,
 
 https://react-icons.github.io/react-icons/icons?name=fa
 
+### Chart
+https://recharts.org/en-US/examples/PieChartWithCustomizedLabel
