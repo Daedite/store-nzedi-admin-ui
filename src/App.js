@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div className="login d-flex justify-content-center ">
+    <div className="login d-flex justify-content-center">
       <div className="container">
         <div className="card">
           <div className="card-body">
