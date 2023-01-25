@@ -1,8 +1,21 @@
 import {Button, Table} from "react-bootstrap";
 import {Navigate, redirect, useNavigate} from "react-router-dom";
 import {GrFormView} from "react-icons/gr";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 export default function VideoTable(){
+    const [videos, setVideos] = useState([])
+    const timAdminApiBaseURL = process.env.REACT_APP_API_BASE_URL
+    console.log(timAdminApiBaseURL)
+
+    useEffect(() => {
+        axios.get(timAdminApiBaseURL+"video/video/getAll").then((data) => {
+            console.log(data?.data);
+            setVideos(data?.data);
+        });
+    }, []);
+
     const videoTable = [
         {id:'2031',title:'example',size: 10, like: 20},
         {id:'2032',title:'example',size: 10, like: 20},

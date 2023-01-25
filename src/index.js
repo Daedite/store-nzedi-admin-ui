@@ -12,12 +12,17 @@ import VideoPage from "./component/pages/dashboard-pages/video/video-page";
 import ViewVideoDetail from "./component/pages/dashboard-pages/video/view-video-detail";
 import VideoCreateForm from "./component/pages/dashboard-pages/video/video-component/video-create-form";
 import ProfilePage from "./component/profile/profile-page";
+import Registration from "./component/user/register/Registration";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: < App/>,
         errorElement: <ErrorPage/>
+    },
+    {
+        path: "/signup",
+        element: < Registration/>,
     },
     {
         path: "/home",

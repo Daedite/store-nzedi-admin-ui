@@ -84,3 +84,9 @@ https://react-icons.github.io/react-icons/icons?name=fa
 
 ### Chart
 https://recharts.org/en-US/examples/PieChartWithCustomizedLabel
+
+### Axions
+
+Axios is an HTTP client library that allows you to make requests to a given endpoint
+
+https://www.freecodecamp.org/news/how-to-use-axios-with-react/
