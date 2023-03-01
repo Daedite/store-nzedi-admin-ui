@@ -1,9 +1,17 @@
 import {Col, Row} from "react-bootstrap";
 import RootMenu from "../../menu/root-menu";
 import TopBar from "../../top-bar/top-bar";
-import {Outlet} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
+import userLoginStore from "../../core/store/user.account.store";
 
 export default function DashboardPage(){
+    const navigate = useNavigate()
+    const loginDetail = userLoginStore(state=> state.loginDetail);
+    if (loginDetail.email ===''){
+        navigate('/login')
+        console.log('not login')
+    }
+    console.log(loginDetail)
     return(
         <>
             <Row >
