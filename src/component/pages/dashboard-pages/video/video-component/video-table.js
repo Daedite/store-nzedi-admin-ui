@@ -7,10 +7,13 @@ import axios from "axios";
 export default function VideoTable(){
     const [videos, setVideos] = useState([])
     const timAdminApiBaseURL = process.env.REACT_APP_API_BASE_URL
-    console.log(timAdminApiBaseURL)
 
     useEffect(() => {
-        axios.get(timAdminApiBaseURL+"video/video/getAll").then((data) => {
+        axios.get(timAdminApiBaseURL+"video/video/getAll",{
+            // headers: {
+            // 'Access-Control-Allow-Origin':'*',
+            // }
+        }).then((data) => {
             console.log(data?.data);
             setVideos(data?.data);
         });
