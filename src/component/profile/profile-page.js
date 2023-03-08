@@ -5,10 +5,11 @@ import CardHeader from "react-bootstrap/CardHeader";
 import {FiThumbsDown, FiThumbsUp} from "react-icons/fi";
 import {AiOutlineFolderView} from "react-icons/ai";
 import "./profile-page.css"
-import userLoginStore from "../core/store/user.account.store";
 import axios from "axios";
-import data from "bootstrap/js/src/dom/data";
+import 'react-toastify/dist/ReactToastify.css'
 import { format } from "date-fns";
+import uuid from "react-uuid";
+import {toast, ToastContainer} from "react-toastify";
 
 
 export default function ProfilePage() {
@@ -16,13 +17,16 @@ export default function ProfilePage() {
     const [hasChanged, setHasChanged] = useState(true);
     const [user, setUser] = useState(null);
     const session = JSON.parse(localStorage.getItem('pipoing'))
-    const getUserApi = process.env.REACT_APP_API_BASE_URL+"user/user/get/"
+    const getUserApi = process.env.REACT_APP_API_BASE_URL+"user/account/"
     const createUserApi = process.env.REACT_APP_API_BASE_URL+"user/user/create"
-    const updateUserApi = process.env.REACT_APP_API_BASE_URL+"user/user/update"
+    const updateUserApi = process.env.REACT_APP_API_BASE_URL+"user"
     const getRoleApi = process.env.REACT_APP_API_BASE_URL+"user/role/get/"
     let userKeeper = {"name":"client with no name","phone":"232843875445","asUser":false}
     const userEmail = useParams().email
     const [userRole, setUserRole] = useState(false)
+    const [error, setError] = useState("")
+    const [loaded, setLoaded] = useState("")
+    const [data, setData] = useState("")
 
     const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
@@ -31,9 +35,16 @@ export default function ProfilePage() {
     const dataFormated = format(new Date(),'yyyy-MM-dd')
     const [birthDate, setBirthDate] = useState(dataFormated)
 
+    const processDataFetchError = (error) => {
+        setError(error);
+    }
+    const processDataFetch = (data) => {
+        setData(data);
+    }
+
     function getUserRole(email){
-        axios.get(getUserApi+email).then((data)=> {
-            console.log(data?.data);
+        axios.get(getUserApi+session.Id).then((data)=> {
+            // console.log(data?.data);
             if(data.data.roleId!==''){
                 axios.get(getRoleApi+data?.data.roleId)
             }
@@ -54,17 +65,16 @@ export default function ProfilePage() {
         // we are verifying with session value to avoid unauthenticated user to view a profile
         // in the future we should check ttl of a session.
         // If the session is valid we call for user detail(name,...roleId) else
-        console.log(session)
-        if(session){
-            axios.get(getUserApi+userEmail).then((data)=> {
-                console.log(data?.data);
+        // console.log(session)
+        if(session || userEmail){
+            axios.get(getUserApi+session.Id).then((data)=> {
+                // console.log(data?.data);
                 if(data.data.email!==''){
                     setUser(data?.data)
                     userKeeper = data.data
-                    setName(data?.data.name)
-                    setSurname(data?.data.surname)
-                    setBirthDate(data?.data.birthDate)
-                    setRole(data?.data.roleId)
+                    setName(data?.data.FirstName)
+                    setSurname(data?.data.LastName)
+                    setBirthDate(format(data?.data.DateOfBirth,'dd/mm/yyyy'))
                 }
             });
         }else{
@@ -93,32 +103,50 @@ export default function ProfilePage() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const user = {
-            "email":email,
-            "name":name,
-            "surname":surname,
-            "birthDate": birthDate,
-            "roleI":role,
+            "id": uuid(),
+            "accountId": session.Id,
+            "firstName":name,
+            "lastName":surname,
+            "dateOfBirth": birthDate,
         }
         if(hasUser()){
-            console.log('update')
-            axios.post(updateUserApi,user).then(
+            // console.log('update')
+            toast.promise(
+                axios.patch(updateUserApi,user),{
+                    pending: 'Loading...',
+                    error: {
+                        render({data}) {
+                            return data.message
+                        }
+                    }
+                }
+            ).then(
                 (response) => {
                     if(response.data!==null){
                         setUser(response.data)
                     }
                 }
-            )
+            ).catch((error) => {processDataFetchError(error)})
+                .finally(() => setLoaded(true))
         }else{
-            console.log('create')
-            axios.post(createUserApi,user).then(
+            toast.promise(
+                axios.post(createUserApi,user), {
+                    pending: 'Loading...',
+                    error: {
+                        render({ data}) {
+                            return data.message
+                        }
+                    }
+                }
+            ).then(
                 (response) => {
                     if(response.data!==null){
                         setUser(response.data)
                     }
                 }
-            )
+            ).catch((error) => {processDataFetchError(error)})
+                .finally(() => setLoaded(true))
         }
-
         console.log(user)
 
     }
@@ -166,8 +194,8 @@ export default function ProfilePage() {
                                     </Form.Label>
                                     <Col sm="7">
                                         {name ?
-                                        <Form.Control value={name}  plaintext onChange={(e) =>nameChanged(e.target.value)} defaultValue={userKeeper.name}/> :
-                                            <Form.Control value={name}  style={{borderColor:"red"}} onChange={(e) =>nameChanged(e.target.value)} defaultValue={userKeeper.name}/>}
+                                        <Form.Control value={name} type="text"  plaintext onChange={(e) =>nameChanged(e.target.value)} /> :
+                                            <Form.Control value={name} type="text"   style={{borderColor:"red"}} onChange={(e) =>nameChanged(e.target.value)} />}
                                     </Col>
                                 </Form.Group>
 
@@ -177,19 +205,8 @@ export default function ProfilePage() {
                                     </Form.Label>
                                     <Col sm="7">
                                         {surname ?
-                                            <Form.Control value={surname}  plaintext onChange={(e) =>surnameChanged(e.target.value)} defaultValue={userKeeper.name}/> :
-                                            <Form.Control value={surname} style={{borderColor:"red"}} onChange={(e) =>surnameChanged(e.target.value)} defaultValue={userKeeper.name}/>}
-                                    </Col>
-                                </Form.Group>
-
-                                <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                                    <Form.Label column sm="5">
-                                        Phone number
-                                    </Form.Label>
-                                    <Col sm="7">
-                                        {cellphone ?
-                                        <Form.Control value={cellphone} plaintext type="number" onChange={(e) =>cellphoneChanged(e.target.value)} placeholder={userKeeper.phone} title="no worries if it's not reflecting"/>:
-                                        <Form.Control value={cellphone} style={{borderColor:"red"}} type="number" onChange={(e) =>cellphoneChanged(e.target.value)} placeholder={userKeeper.phone}/>}
+                                            <Form.Control value={surname} type="text"  plaintext onChange={(e) =>surnameChanged(e.target.value)} /> :
+                                            <Form.Control value={surname} type="text"  style={{borderColor:"red"}} onChange={(e) =>surnameChanged(e.target.value)} />}
                                     </Col>
                                 </Form.Group>
 
@@ -199,7 +216,7 @@ export default function ProfilePage() {
                                     </Form.Label>
                                     <Col sm="7">
                                         {birthDate ?
-                                            <Form.Control value={birthDate} plaintext type="date" onChange={(e) =>birthDateChanged(e.target.value)} placeholder={userKeeper.phone}/>:
+                                            <Form.Control value={birthDate} plaintext type="date" onChange={(e) =>birthDateChanged(e.target.value)} />:
                                             <Form.Control value={birthDate} className="empty-input" type="date" onChange={(e) =>birthDateChanged(e.target.value)} />}
                                     </Col>
                                 </Form.Group>
@@ -213,7 +230,7 @@ export default function ProfilePage() {
                                     </Col>
                                 </Form.Group>
                                 <Row className="align-content-center">
-                                    <Button type="submit" variant="success" disabled={hasChanged}>Success</Button>
+                                    <Button type="submit" variant="success" disabled={hasChanged}>Update</Button>
                                 </Row>
                             </Form>
                         </Row>
@@ -324,6 +341,7 @@ export default function ProfilePage() {
                     </Card>
                 </Col>
             </Row>
+            <ToastContainer/>
         </Container>
     )
 }

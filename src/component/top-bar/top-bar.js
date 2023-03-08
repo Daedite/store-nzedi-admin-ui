@@ -3,25 +3,36 @@ import logo from "../../util/timtube.png"
 import logo2 from "../../util/logo.png"
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 export default function TopBar(){
     const session = JSON.parse(localStorage.getItem('pipoing'));
     const [userEmail, setUserEmail] = useState("");
-    const getUserApi = process.env.REACT_APP_API_BASE_URL+"user/user/get/";
+    const getUserApi = process.env.REACT_APP_API_BASE_URL+"user/account/";
     const [userName, setUserName] = useState("")
+    const navigate = new useNavigate();
 
     useEffect(() => {
-        axios.get(getUserApi+session.email).then((data)=> {
-            if(data.data.name||data.data.surname){
-               setUserName(data.data.name+" "+data.data.surname)
+        // console.log(getUserApi+session.Id)
+        axios.get(getUserApi+session.Id).then((data)=> {
+            // console.log(data.data)
+            if(data.data.FirstName||data.data.LastName){
+               setUserName(data.data.FirstName+" "+data.data.LastName)
+            }else{
+                setUserName("Administrator")
             }
         });
-    })
+    },[getUserApi,session.Id])
 
     useEffect(()=>{
-        if(session.email){
-            setUserEmail(session.email)
+        if(session.Email){
+            setUserEmail(session.Email)
         }
-    })
+    },[session.Email])
+
+    const logOut = () => {
+        localStorage.removeItem('pipoing')
+        navigate("/")
+    }
 
     return (
         <Navbar className="p-2 bg-black text-white">
@@ -36,7 +47,7 @@ export default function TopBar(){
                             <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.3">Help</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">Logout</NavDropdown.Item>
+                            <NavDropdown.Item onClick={logOut}>Logout</NavDropdown.Item>
                         </NavDropdown>
                     </Container>
                 </Navbar>

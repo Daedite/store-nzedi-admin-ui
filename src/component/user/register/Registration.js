@@ -5,8 +5,11 @@ import {useNavigate} from "react-router-dom";
 import React, {useState} from "react";
 import "./../user.css"
 import Spinners from "../../util/spinners";
-import logo from "../../../util/logo.png"
+import logo from "../../../util/ditkay.png"
 import axios from "axios";
+import uuid from "react-uuid";
+import Toaster from "../../util/toaster";
+import {ToastContainer} from "react-toastify";
 
 
 export default  function RegisterPage() {
@@ -15,7 +18,7 @@ export default  function RegisterPage() {
     const [emailIsTrue, setEmailIsTrue] = useState( false);
     const [passwordIsTrue, setPasswordTrue] = useState(false);
     const [spinner, setSpinner] = useState(true);
-    const userCreateApi = process.env.REACT_APP_API_BASE_URL+"user/user-account/create"
+    const userCreateApi = process.env.REACT_APP_API_BASE_URL+"account"
     const [newUser, setNewUser] = useState(null);
     const navigate = new useNavigate();
 
@@ -32,15 +35,15 @@ export default  function RegisterPage() {
         setPasswordTrue(false)
         setSpinner(false)
 
-        const userAccount = {
-            "customerId": "",
+        const account = {
+            "id": uuid(),
             "email":email,
             "password":password,
             "date": new Date(),
-            "status": false,
-            "token":"",
         }
-    axios.post(userCreateApi,userAccount).then(
+        console.log(account)
+    axios.post(userCreateApi,account,{
+        }).then(
         (response) => {
             setNewUser(response.data)
             if(response.data!==null){
@@ -48,7 +51,14 @@ export default  function RegisterPage() {
                 navigate("/")
             }
         }
-    )
+    ).catch((error) => {Toaster("error","Authentication failure!")}).finally(() => resetButton())
+    }
+    function resetButton(){
+        setSpinner(true)
+        bothInputAreFalse()
+    }
+    const bothInputAreFalse = () =>{
+        return emailIsTrue === false && passwordIsTrue === false;
     }
 
     const emailChanged = (event) => {
@@ -106,9 +116,7 @@ export default  function RegisterPage() {
                     </div>
                 </Row>
             </Col>
-
-
-
+            <ToastContainer/>
         </div>
     );
 }

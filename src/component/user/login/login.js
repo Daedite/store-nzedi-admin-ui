@@ -4,9 +4,11 @@ import {Col, Row} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import logo from "../../../util/logo.png";
+import logo from "../../../util/ditkay.png";
 import Spinners from "../../util/spinners";
 import userAccountStore from "../../core/store/user.account.store";
+import {toast, ToastContainer} from "react-toastify";
+import Toaster from "../../util/toaster";
 
 
 function LoginPage() {
@@ -15,13 +17,17 @@ function LoginPage() {
     const [emailIsTrue, setEmailIsTrue] = useState( false);
     const [passwordIsTrue, setPasswordTrue] = useState(false);
     const [spinner, setSpinner] = useState(true);
-    const userCreateApi = process.env.REACT_APP_API_BASE_URL+"user/user-account/login"
+    const userCreateApi = process.env.REACT_APP_API_BASE_URL+"account"
     const [newUser, setNewUser] = useState();
     const navigate = new useNavigate();
     const addLoginDetail = userAccountStore(state => state.addLoginDetail)
 
+
     const bothInputAreTrue = () =>{
         return emailIsTrue === true && passwordIsTrue === true;
+    }
+    const bothInputAreFalse = () =>{
+        return emailIsTrue === false && passwordIsTrue === false;
     }
     const handleLoginSubmit = (event) =>{
         event.preventDefault();
@@ -33,27 +39,28 @@ function LoginPage() {
         setPasswordTrue(false)
         setSpinner(false)
 
-        const userAccount = {
-            "customerId": "",
+        const account = {
+            "id": "",
             "email":email,
             "password":password,
             "date": new Date(),
-            "status": false,
-            "token":"",
         }
-        axios.post(userCreateApi,userAccount).then(
+        axios.patch(userCreateApi,account).then(
             (response) => {
                 setNewUser(response.data)
                 localStorage.setItem('pipoing', JSON.stringify(response.data))
                 if(response.data!==null){
-                    console.log(response.data)
                     addLoginDetail(response.data)
                     navigate("/home")
                 }
             }
-        )
+        ).catch((error) => {Toaster("error","Authentication failure!")}).
+        finally(() => resetButton())
     }
-
+    function resetButton(){
+        setSpinner(true)
+        bothInputAreFalse()
+    }
 
     const emailChanged = (event) => {
         setEmailIsTrue(true);
@@ -96,7 +103,7 @@ function LoginPage() {
                                         <Form.Control value={password}  onChange={(e) => passwordChanged(e.target.value)} type="password" placeholder="Password"/>
                                     </Form.Group>
                                     <Row className="mx-auto">
-                                        <Button  type="submit"  disabled={!bothInputAreTrue()} className="brand-second-color" >
+                                        <Button  type="submit"  disabled={!bothInputAreTrue} className="brand-second-color" >
                                             {spinner ? 'login' : spinnerComponent}
                                         </Button>
                                     </Row>
@@ -107,6 +114,7 @@ function LoginPage() {
                     </div>
                 </Row>
             </Col>
+            <ToastContainer/>
         </div>
     );
 }
