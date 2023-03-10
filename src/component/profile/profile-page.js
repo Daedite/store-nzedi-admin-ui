@@ -16,22 +16,21 @@ export default function ProfilePage() {
     const navigate = useNavigate();
     const [hasChanged, setHasChanged] = useState(true);
     const [user, setUser] = useState(null);
-    const session = JSON.parse(localStorage.getItem('pipoing'))
-    const getUserApi = process.env.REACT_APP_API_BASE_URL+"user/account/"
-    const createUserApi = process.env.REACT_APP_API_BASE_URL+"user/user/create"
+    const [accountId, setAccountId] = useState("")
+    const getUserApi = process.env.REACT_APP_API_BASE_URL+"product/account/"
+    const createUserApi = process.env.REACT_APP_API_BASE_URL+"user"
     const updateUserApi = process.env.REACT_APP_API_BASE_URL+"user"
-    const getRoleApi = process.env.REACT_APP_API_BASE_URL+"user/role/get/"
+    const getRoleApi = process.env.REACT_APP_API_BASE_URL+"product/role/get/"
+    const SESSION_KEY = process.env.REACT_APP_SESSION_KEY
     let userKeeper = {"name":"client with no name","phone":"232843875445","asUser":false}
     const userEmail = useParams().email
     const [userRole, setUserRole] = useState(false)
     const [error, setError] = useState("")
     const [loaded, setLoaded] = useState("")
     const [data, setData] = useState("")
-
+    const [toUpdate, setToUpdate] = useState(false)
     const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
-    const [cellphone, setCellphone] = useState("")
-    const [role, setRole] = useState("")
     const dataFormated = format(new Date(),'yyyy-MM-dd')
     const [birthDate, setBirthDate] = useState(dataFormated)
 
@@ -42,14 +41,6 @@ export default function ProfilePage() {
         setData(data);
     }
 
-    function getUserRole(email){
-        axios.get(getUserApi+session.Id).then((data)=> {
-            // console.log(data?.data);
-            if(data.data.roleId!==''){
-                axios.get(getRoleApi+data?.data.roleId)
-            }
-        });
-    }
 
     function getRole(roleId){
         if(roleId!==''){
@@ -62,23 +53,31 @@ export default function ProfilePage() {
     }
 
     useEffect(() => {
-        // we are verifying with session value to avoid unauthenticated user to view a profile
+        // we are verifying with session value to avoid unauthenticated product to view a profile
         // in the future we should check ttl of a session.
-        // If the session is valid we call for user detail(name,...roleId) else
+        // If the session is valid we call for product detail(name,...roleId) else
         // console.log(session)
-        if(session || userEmail){
+        let session = null
+        if(localStorage.getItem(SESSION_KEY)){
+            session = JSON.parse(localStorage.getItem(SESSION_KEY))
+            console.log(session)
+            setAccountId(session.Id)
+        }else{
+            navigate('/')
+        }
+
+        if(session){
             axios.get(getUserApi+session.Id).then((data)=> {
-                // console.log(data?.data);
-                if(data.data.email!==''){
+                if(data.data.Id){
+                    setToUpdate(true)
                     setUser(data?.data)
                     userKeeper = data.data
                     setName(data?.data.FirstName)
                     setSurname(data?.data.LastName)
-                    setBirthDate(format(data?.data.DateOfBirth,'dd/mm/yyyy'))
+                    const d = new Date(data?.data.DateOfBirth)
+                    setBirthDate(format(d,'yyyy-MM-dd'))
                 }
             });
-        }else{
-            navigate('/')
         }
     },[])
 
@@ -89,7 +88,7 @@ export default function ProfilePage() {
         setHasChanged(false);
     }
     const hasUser = ()=>{
-        return !!(name || surname || cellphone || birthDate);
+        return !!(name || surname || birthDate);
     }
 
     function editAccount() {
@@ -97,20 +96,21 @@ export default function ProfilePage() {
     }
 
     function viewContents() {
-        navigate('/home/view-my-video')
+        navigate('/home/view-my-service')
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const user = {
             "id": uuid(),
-            "accountId": session.Id,
+            "accountId": accountId,
             "firstName":name,
             "lastName":surname,
             "dateOfBirth": birthDate,
         }
-        if(hasUser()){
-            // console.log('update')
+        console.log(hasUser())
+        if(toUpdate){
+            console.log('update')
             toast.promise(
                 axios.patch(updateUserApi,user),{
                     pending: 'Loading...',
@@ -129,6 +129,7 @@ export default function ProfilePage() {
             ).catch((error) => {processDataFetchError(error)})
                 .finally(() => setLoaded(true))
         }else{
+            console.log('create')
             toast.promise(
                 axios.post(createUserApi,user), {
                     pending: 'Loading...',
@@ -138,7 +139,7 @@ export default function ProfilePage() {
                         }
                     }
                 }
-            ).then(
+                ).then(
                 (response) => {
                     if(response.data!==null){
                         setUser(response.data)
@@ -161,10 +162,6 @@ export default function ProfilePage() {
         setSurname(event)
     }
 
-    const cellphoneChanged = (event) =>{
-        toggle()
-        setCellphone(event)
-    }
 
     const birthDateChanged = (event) =>{
         toggle()

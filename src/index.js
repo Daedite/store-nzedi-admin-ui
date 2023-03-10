@@ -7,12 +7,14 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import ErrorPage from "./component/pages/error-page";
 import DashboardPage from "./component/pages/dashboard-pages/dashboard-page";
 import LandingPage from "./component/pages/dashboard-pages/landing-page/landing-page";
-import UserPage from "./component/pages/dashboard-pages/user/user-page";
-import VideoPage from "./component/pages/dashboard-pages/video/video-page";
-import ViewVideoDetail from "./component/pages/dashboard-pages/video/view-video-detail";
-import VideoCreateForm from "./component/pages/dashboard-pages/video/video-component/video-create-form";
+import ProductPage from "./component/pages/dashboard-pages/product/product-page";
+import VideoPage from "./component/pages/dashboard-pages/service/video-page";
+import ViewVideoDetail from "./component/pages/dashboard-pages/service/view-video-detail";
+import VideoCreateForm from "./component/pages/dashboard-pages/service/video-component/video-create-form";
 import ProfilePage from "./component/profile/profile-page";
 import Registration from "./component/user/register/Registration";
+import ProductCreateForm from "./component/pages/dashboard-pages/product/user-components/product-create-form";
+import ProductViewDetail from "./component/pages/dashboard-pages/product/user-components/product-view-detail";
 
 const router = createBrowserRouter([
     {
@@ -33,21 +35,29 @@ const router = createBrowserRouter([
                 element: < LandingPage/>
             },
             {
-                path: "user",
-                element: < UserPage/>
+                path: "product",
+                element: < ProductPage/>
             },
             {
                 path: "video",
                 element: < VideoPage/>
             },
             {
-                path: "video-view/:videoId",
+                path: "service-view/:videoId",
                 element: < ViewVideoDetail/>,
                 // loader: videoIdLoader
             },
             {
-                path: "video-create",
+                path: "service-create",
                 element: < VideoCreateForm/>,
+            },
+            {
+                path: "product-create",
+                element: < ProductCreateForm/>,
+            },
+            {
+                path: "product-view/:productId",
+                element: < ProductViewDetail/>,
             },
             {
                 path: "profile/:email",

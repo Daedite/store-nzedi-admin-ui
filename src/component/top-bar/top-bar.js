@@ -5,13 +5,24 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 export default function TopBar(){
-    const session = JSON.parse(localStorage.getItem('pipoing'));
+    const [accountId, setAccountId] = useState("")
     const [userEmail, setUserEmail] = useState("");
     const getUserApi = process.env.REACT_APP_API_BASE_URL+"user/account/";
     const [userName, setUserName] = useState("")
     const navigate = new useNavigate();
+    const SESSION_KEY = process.env.REACT_APP_SESSION_KEY
+
 
     useEffect(() => {
+        let session = null
+        if(localStorage.getItem(SESSION_KEY)){
+            session = JSON.parse(localStorage.getItem(SESSION_KEY))
+            setAccountId(session.Id)
+            setUserEmail(session.Email)
+        }else{
+            navigate('/')
+            return
+        }
         // console.log(getUserApi+session.Id)
         axios.get(getUserApi+session.Id).then((data)=> {
             // console.log(data.data)
@@ -21,13 +32,8 @@ export default function TopBar(){
                 setUserName("Administrator")
             }
         });
-    },[getUserApi,session.Id])
+    },[getUserApi])
 
-    useEffect(()=>{
-        if(session.Email){
-            setUserEmail(session.Email)
-        }
-    },[session.Email])
 
     const logOut = () => {
         localStorage.removeItem('pipoing')

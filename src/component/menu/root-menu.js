@@ -27,7 +27,7 @@ export default function RootMenu(){
                             <FaUserAlt style={{fontSize:'30px'}}/>
                         </Col>
                         <Col className="my-1" md="9">
-                            <Navbar.Brand className="mx-3" href="/home/user">User</Navbar.Brand>
+                            <Navbar.Brand className="mx-3" href="/home/product">Product</Navbar.Brand>
                         </Col>
                     </Row>
                 </Container>
@@ -40,7 +40,7 @@ export default function RootMenu(){
                             <FaVideo style={{fontSize:'30px'}}/>
                         </Col>
                         <Col className="my-1" md="9">
-                            <Navbar.Brand className="mx-3" href="/home/video">Video</Navbar.Brand>
+                            <Navbar.Brand className="mx-3" href="/home/video">Service</Navbar.Brand>
                         </Col>
                     </Row>
                 </Container>

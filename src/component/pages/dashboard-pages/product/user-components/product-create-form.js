@@ -3,22 +3,26 @@ import {useState} from "react";
 import axios from "axios";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import uuid from "react-uuid";
 
 
-export default function VideoCreateForm() {
+export default function ProductCreateForm() {
     const [hasPrice, setHasPrice] = useState(false);
     const [videoCreationResponse, setVideoCreationResponse] = useState(null);
     const [file, setFile] = useState(null);
     const [fileData, setFileData] = useState(null);
+    const [fileType, setFileType] = useState("");
     const [title, setTitle] = useState("");
     const [date, setDate] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
+    const [buyPrice, setBuyPrice] = useState(0);
+    const [quantity, setQuantity] = useState(0);
     const [error, setError] = useState(null);
-    const timApiBaseURL = process.env.REACT_APP_API_BASE_URL
+    const timAdminApiBaseURL = process.env.REACT_APP_ESHOP_API_BASE_URL
     let data = null;
 
-    const types = ["video/mp4"];
+    const types = ["service/mp4","image/png"];
 
     function toggle(){
         setHasPrice(!hasPrice);
@@ -44,6 +48,7 @@ export default function VideoCreateForm() {
 
     const changeHandler = (e) => {
         let selected = e.target.files[0];
+        setFileType(selected.type)
 
         if (selected && types.includes(selected.type)) {
             setFile(selected);
@@ -56,7 +61,6 @@ export default function VideoCreateForm() {
                        .reduce((data, byte) => data + String.fromCharCode(byte), '')
                );
                 setFileData(base64);
-                // console.log(convertDataURIToBinary(base64))
             };
         } else {
             setFile(null);
@@ -90,7 +94,22 @@ export default function VideoCreateForm() {
             setPrice(price);
         }
     }
+    const buyPriceHandler = (e) => {
+        let buyPrice = e.target.value;
+        if(price){
+            setBuyPrice(buyPrice);
+        }
+    }
+
+    const setQuantityHandler = (e) => {
+        let quantity = e.target.value;
+        if(price){
+            setQuantity(quantity);
+        }
+    }
+
     let BASE64_MARKER = ';base64,';
+
     function convertDataURIToBinary(dataURI) {
         let base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
         let base64 = dataURI.substring(base64Index);
@@ -108,16 +127,25 @@ export default function VideoCreateForm() {
     const handleSubmit = (event) => {
         event.preventDefault();
         let privateVideo = false
-        let createVideoUrl = timApiBaseURL+"video/video/create"
-        let createVideoDataUrl = timApiBaseURL+"video/video-data-test/create"
+        let createProductUrl = process.env.REACT_APP_ESHOP_API_BASE_URL+"product"
+        let createProductMediaUrl = process.env.REACT_APP_ESHOP_API_BASE_URL+"product-media"
+        let createMediaUrl = process.env.REACT_APP_ESHOP_API_BASE_URL+"media"
         if(price>0) privateVideo = true;
-        let video = {"title":title,"date":date,"dateUploaded": new Date(),"description":description,"isPrivate":privateVideo,"price":price}
-        // let videoData = {"id":"response.data.id","video":fileData,"fileType":"mp4","size":file.size}
+        let video = {
+            "id": uuid(),
+            "name":title,
+            "buyPrice":Number(price),
+            "sellPrice":Number(buyPrice),
+            "quantity": Number(quantity),
+            "description":description,
+            }
 
          console.log(readFileDataAsBase64)
 
+        console.log(video)
+        // Posting Product.
         toast.promise(
-            axios.post(createVideoUrl,video),
+            axios.post(createProductUrl,video),
         {
             pending: 'loading ...',
             error: {
@@ -125,43 +153,50 @@ export default function VideoCreateForm() {
                     return data.message
                 }
             }
-        }).then((response) => {
-            setVideoCreationResponse(response.data)
-
-            let videoData = {"id":response.data.id,"picture":"","video":fileData,"fileType":"mp4","fileSize":""}
-            console.log(videoData)
-            toast.promise(
-                axios.post(createVideoDataUrl,videoData),
-                {
-                    pending: 'loading ...',
-                    error: {
-                        render({data}) {
-                            return data.message
+        }).then((productResponse) => {
+            setVideoCreationResponse(productResponse.data)
+            if(productResponse.data){
+                console.log(productResponse.data)
+                let media = {"id":uuid(), "image":fileData,"description":"mp4"}
+                console.log(media)
+                //creating media
+                toast.promise(
+                    axios.post(createMediaUrl,media),
+                    {
+                        pending: 'loading ...',
+                        error: {
+                            render({data}) {
+                                return data.message
+                            }
                         }
+                    }).then((response) => {
+                    console.log(response.data)
+                    if(response.data){
+                        let productMedia = {"id":uuid(),"mediaId":response.data.id,"mediaType":fileType,"productId":productResponse.data.Id}
+                        //Creating product media
+                        axios.post(createProductMediaUrl,productMedia).then((productMediaResponse) => {
+                            console.log(productMediaResponse.data)
+                        })
                     }
-                }).then((response) => {
-                setVideoCreationResponse(response.data)
-                console.log(response.data)
-            })
+                })
+            }
         })
     }
 
-    const checkButtonText = hasPrice ?  "Uncheck me if video is free." : "Check me out if video is not free.";
+    const checkButtonText = hasPrice ?  "Uncheck me if service is free." : "Check me out if service is not free.";
 
     return (
-        <Card >
+        <Card style={{width:"auto"}}>
             <Form className="m-3" style={{width:"30em"}} onSubmit={handleSubmit}>
-
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Video Title</Form.Label>
-                    <Form.Control type="text" placeholder="Enter a Title" onChange={titleHandler} aria-required={true}/>
+                    <Form.Label>Product Title</Form.Label>
+                    <Form.Control type="text" placeholder="Enter a Title"  onChange={titleHandler} aria-required={true}/>
                     <Form.Text className="text-muted">
-
                     </Form.Text>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Video</Form.Label>
+                    <Form.Label>Product Image</Form.Label>
                     <Form.Control type="file" onChange={changeHandler} placeholder="Enter a Title" aria-required={true}/>
                     <div className="output">
                         {error && <div className="error">{error}</div>}
@@ -169,18 +204,18 @@ export default function VideoCreateForm() {
                     </div>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Realise date</Form.Label>
-                    <Form.Control type="date" onChange={dateHandler} placeholder="Password" aria-required={true}/>
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check onChange={toggle} type="checkbox" label={checkButtonText}/>
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formBasicPassword" hidden={!hasPrice}>
+                <Form.Group className="mb-3" controlId="formBasicPassword" >
                     <Form.Label>Price</Form.Label>
-                    <Form.Control prefix="R" type="number" onChange={priceHandler} placeholder="Password"/>
+                    <Form.Control prefix="R" type="number" onChange={priceHandler} />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicPassword" >
+                    <Form.Label>Buy Price</Form.Label>
+                    <Form.Control prefix="R" type="number" onChange={buyPriceHandler} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicPassword" >
+                    <Form.Label>Product Quantity</Form.Label>
+                    <Form.Control prefix="R" type="number" onChange={setQuantityHandler} />
                 </Form.Group>
 
                 <InputGroup className="mb-3">

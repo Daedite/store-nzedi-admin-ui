@@ -6,10 +6,10 @@ import axios from "axios";
 
 export default function VideoTable(){
     const [videos, setVideos] = useState([])
-    const timAdminApiBaseURL = process.env.REACT_APP_API_BASE_URL
+    const ESHOP_API_PRODUCTS = process.env.REACT_APP_ESHOP_API_BASE_URL + "products"
 
     useEffect(() => {
-        axios.get(timAdminApiBaseURL+"video/video/getAll",{
+        axios.get(ESHOP_API_PRODUCTS,{
             // headers: {
             // 'Access-Control-Allow-Origin':'*',
             // }
@@ -48,14 +48,14 @@ export default function VideoTable(){
 function TableContents(props) {
     const navigate = useNavigate();
     const handleClick = (id) => {
-        let url = "/home/video-view/"+id;
+        let url = "/home/service-view/"+id;
         navigate(url)
     };
     return (
         <tr>
-            <td>{props.title}</td>
-            <td>{props.size}</td>
-            <td>{props.like}</td>
+            <td>{props.name}</td>
+            <td>{props.buyPrice}</td>
+            <td>{props.sellPrice}</td>
             <td className="text-center"><Button onClick={(e) => handleClick(props.id)} title="View details">
                 <GrFormView size="20px"/>
             </Button></td>
