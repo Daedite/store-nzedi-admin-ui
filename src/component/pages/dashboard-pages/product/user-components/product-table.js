@@ -14,18 +14,11 @@ export default function ProductTable(){
             // 'Access-Control-Allow-Origin':'*',
             // }
         }).then((data) => {
-            console.log(data?.data);
+            // console.log(data?.data);
             setProducts(data?.data);
         });
     }, []);
 
-    const videoTable = [
-        {id:'2031',title:'example',size: 10, like: 20},
-        {id:'2032',title:'example',size: 10, like: 20},
-        {id:'2033',title:'example',size: 10, like: 20},
-        {id:'2034',title:'example',size: 10, like: 20},
-        {id:'2035',title:'example',size: 10, like: 20},
-    ];
     return (
         <>
             <Table striped bordered hover>

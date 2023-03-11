@@ -8,16 +8,16 @@ export default function VideoTable(){
     const [videos, setVideos] = useState([])
     const ESHOP_API_PRODUCTS = process.env.REACT_APP_ESHOP_API_BASE_URL + "products"
 
-    useEffect(() => {
-        axios.get(ESHOP_API_PRODUCTS,{
-            // headers: {
-            // 'Access-Control-Allow-Origin':'*',
-            // }
-        }).then((data) => {
-            console.log(data?.data);
-            setVideos(data?.data);
-        });
-    }, []);
+    // useEffect(() => {
+    //     axios.get(ESHOP_API_PRODUCTS,{
+    //         // headers: {
+    //         // 'Access-Control-Allow-Origin':'*',
+    //         // }
+    //     }).then((data) => {
+    //         console.log(data?.data);
+    //         setVideos(data?.data);
+    //     });
+    // }, []);
 
     const videoTable = [
         {id:'2031',title:'example',size: 10, like: 20},

@@ -14,7 +14,7 @@ export default function VideoPage(){
         <Card>
             <Card.Body>
                 <ButtonToolbar className="justify-content-between" aria-label="Toolbar with Button groups">
-                    <h4> Videos</h4>
+                    <h4> Services </h4>
                     <InputGroup>
                         <Button variant="info" title="add new video" onClick={(e) => createVideoHandler()}>
                             <HiFolderAdd size="25"/>

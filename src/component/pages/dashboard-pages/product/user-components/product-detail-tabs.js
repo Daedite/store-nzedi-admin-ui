@@ -5,7 +5,7 @@ import ProductSonnet from "./productSonnet";
 export default function ProductDetailTabs(props) {
     return (
         <Tabs
-            defaultActiveKey="profile"
+            defaultActiveKey="Quantity"
             id="fill-tab-example"
             className="mb-3"
             fill>

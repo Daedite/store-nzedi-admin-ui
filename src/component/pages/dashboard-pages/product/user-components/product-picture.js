@@ -5,12 +5,11 @@ import {useNavigate} from "react-router-dom";
 
 export default function ProductPicture(props){
     const ESHOP_API_PRODUCT_MEDIA = process.env.REACT_APP_ESHOP_API_BASE_URL + "product-media/product/"
-    const [productMedia, setProductMedia] = useState()
+    const [medias, setMedias] = useState(image)
     const navigate = useNavigate();
     const productId = props.productId
     console.log(props.productId)
 
-    const image = "https://media.istockphoto.com/id/477151294/photo/smile-girl-at-beach.jpg?s=1024x1024&w=is&k=20&c=5SNrc56tXFIeSN0Avumm4zuqfK4kBXaDPHULuPuuUAo=";
 
     useEffect(() => {
         console.log(productId)
@@ -22,14 +21,23 @@ export default function ProductPicture(props){
             // }
         }).then((data) => {
             console.log(data?.data);
-            setProductMedia(data?.data);
+            setMedias(data?.data);
         })
             // .catch((error) => navigate("/home/product"));
     },[productId])
 
     return(
         <>
-            <Image className="m-4" src={image} width="90%"></Image>
+            {medias.map( media =>
+                <Image className="m-4" key={media.id} src={"data:image/png;base64,"+media.image} width="90%"></Image>
+            )}
+
         </>
     )
 }
+
+const image = [
+    {  id:"1",
+        image: "https://media.istockphoto.com/id/477151294/photo/smile-girl-at-beach.jpg?s=1024x1024&w=is&k=20&c=5SNrc56tXFIeSN0Avumm4zuqfK4kBXaDPHULuPuuUAo=",
+    description:"placeHolder"},
+    ]

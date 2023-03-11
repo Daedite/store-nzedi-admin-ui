@@ -40,7 +40,7 @@ export default function RootMenu(){
                             <FaVideo style={{fontSize:'30px'}}/>
                         </Col>
                         <Col className="my-1" md="9">
-                            <Navbar.Brand className="mx-3" href="/home/video">Service</Navbar.Brand>
+                            <Navbar.Brand className="mx-3" href="/home/service">Service</Navbar.Brand>
                         </Col>
                     </Row>
                 </Container>
