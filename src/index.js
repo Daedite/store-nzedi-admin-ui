@@ -15,6 +15,7 @@ import ProfilePage from "./component/profile/profile-page";
 import Registration from "./component/user/register/Registration";
 import ProductCreateForm from "./component/pages/dashboard-pages/product/user-components/product-create-form";
 import ProductViewDetail from "./component/pages/dashboard-pages/product/user-components/product-view-detail";
+import AddPicture from "./component/pages/dashboard-pages/product/user-components/product-image/add-product-image";
 
 const router = createBrowserRouter([
     {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
             {
                 path: "product-view/:productId",
                 element: < ProductViewDetail/>,
+            },
+            {
+                path: "product-add-picture/:productId",
+                element: < AddPicture/>,
             },
             {
                 path: "profile/:email",

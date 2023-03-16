@@ -17,7 +17,7 @@ export default function ProfilePage() {
     const [hasChanged, setHasChanged] = useState(true);
     const [user, setUser] = useState(null);
     const [accountId, setAccountId] = useState("")
-    const getUserApi = process.env.REACT_APP_API_BASE_URL+"product/account/"
+    const getUserApi = process.env.REACT_APP_API_BASE_URL+"user/account/"
     const createUserApi = process.env.REACT_APP_API_BASE_URL+"user"
     const updateUserApi = process.env.REACT_APP_API_BASE_URL+"user"
     const getRoleApi = process.env.REACT_APP_API_BASE_URL+"product/role/get/"

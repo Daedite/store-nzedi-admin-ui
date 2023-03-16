@@ -33,7 +33,9 @@ export default function ProductTable(){
                 </tr>
                 </thead>
                 <tbody>
-                {products.map(product => <TableContents name={product.Name} quantity={product.Quantity} buyPrice={product.BuyPrice} sellPrice={product.SellPrice} key={product.Id} id={product.Id}/>)}
+                {products != null &&
+                    products.map(product => <TableContents name={product.Name} quantity={product.Quantity} buyPrice={product.BuyPrice} sellPrice={product.SellPrice} key={product.Id} id={product.Id}/>)
+                }
                 </tbody>
             </Table>
         </>

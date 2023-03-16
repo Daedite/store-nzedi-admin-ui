@@ -64,9 +64,8 @@ export default function ProductCreateForm() {
             };
         } else {
             setFile(null);
-            setError("Please select an image file (mp4)");
+            setError("Please select an image file "+types);
         }
-        // console.log(data)
     };
 
     const titleHandler = (e) => {
@@ -140,9 +139,9 @@ export default function ProductCreateForm() {
             "description":description,
             }
 
-         console.log(readFileDataAsBase64)
+         // console.log(readFileDataAsBase64)
 
-        console.log(video)
+        // console.log(video)
         // Posting Product.
         toast.promise(
             axios.post(createProductUrl,video),
@@ -156,9 +155,9 @@ export default function ProductCreateForm() {
         }).then((productResponse) => {
             setVideoCreationResponse(productResponse.data)
             if(productResponse.data){
-                console.log(productResponse.data)
+                // console.log(productResponse.data)
                 let media = {"id":uuid(), "image":fileData,"description":"mp4"}
-                console.log(media)
+                // console.log(media)
                 //creating media
                 toast.promise(
                     axios.post(createMediaUrl,media),
@@ -170,12 +169,13 @@ export default function ProductCreateForm() {
                             }
                         }
                     }).then((response) => {
-                    console.log(response.data)
+                    // console.log(response.data)
                     if(response.data){
                         let productMedia = {"id":uuid(),"mediaId":response.data.id,"mediaType":fileType,"productId":productResponse.data.Id}
                         //Creating product media
                         axios.post(createProductMediaUrl,productMedia).then((productMediaResponse) => {
-                            console.log(productMediaResponse.data)
+                            // console.log(productMediaResponse.data)
+                            event.target.reset()
                         })
                     }
                 })

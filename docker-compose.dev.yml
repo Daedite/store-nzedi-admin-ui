@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: eshop-admin-react-dev
+#    image: 30e5a67b1a6a
+    image: eshop-admin-react-dev
+    build:
+      context: .
+      target: development
+    volumes:
+      - ./src:/app/src
+    ports:
+      - 3004:3004

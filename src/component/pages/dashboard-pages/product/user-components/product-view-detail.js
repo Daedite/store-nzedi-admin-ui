@@ -10,6 +10,9 @@ import ProductDetailTabs from "./product-detail-tabs";
 import axios from "axios";
 import {RiDeleteBin6Line} from "react-icons/ri";
 import {BiImageAdd} from "react-icons/bi";
+import uuid from "react-uuid";
+import {toast,ToastContainer} from "react-toastify";
+import AddPicture from "./product-image/add-product-image";
 
 export default function ProductViewDetail() {
     const [modalShow, setModalShow] = React.useState(false);
@@ -19,6 +22,10 @@ export default function ProductViewDetail() {
     const navigate = useNavigate();
     const [product, setProduct] = useState(example)
 
+
+    const addPicture = () => {
+        navigate("/home/product-view/"+productId)
+    }
     // console.log(productId)
     useEffect(() => {
         console.log(productId)
@@ -46,13 +53,13 @@ export default function ProductViewDetail() {
                                     <Button className="mx-1" variant="warning" onClick={() => setDeleteModalShow(true)}>
                                         <RiDeleteBin6Line/>
                                     </Button>
-                                    <PictureDeleteModal show={deleteModalShow} onHide={() => setDeleteModalShow(false)}
+                                    <DeleteProduct product={product} show={deleteModalShow} onHide={() => setDeleteModalShow(false)}
                                     />
 
                                     <Button variant="info" onClick={() => setModalShow(true)}>
                                         <BiImageAdd/>
                                     </Button>
-                                    <MyVerticallyCenteredModal productId={productId} show={modalShow} onHide={() => setModalShow(false)}
+                                    <AddPicture productid={productId} show={modalShow} onHide={() => setModalShow(false)}
                                     />
                                 </InputGroup>
                             </ButtonToolbar>
@@ -77,6 +84,7 @@ export default function ProductViewDetail() {
                         </Container>
                     </Card>
                 </Col>
+                <ToastContainer position={toast.POSITION.BOTTOM_CENTER} closeOnClick={false} hideProgressBar />
             </Row>
             {/*<Row>*/}
             {/*    <Container>*/}
@@ -90,8 +98,20 @@ export default function ProductViewDetail() {
     )
 }
 
-function MyVerticallyCenteredModal(props) {
-
+function DeleteProduct(props) {
+    const ESHOP_API_PRODUCT = process.env.REACT_APP_ESHOP_API_BASE_URL + "product/"
+    const handleDelete = (event) => {
+        // event.preventDefault()
+        // console.log(props.product)
+        // axios.delete(ESHOP_API_PRODUCT,props.product,{
+        //     // headers: {
+        //     // 'Access-Control-Allow-Origin':'*',
+        //     // }
+        // }).then((data) => {
+        //     console.log(data?.data);
+        //     // setProduct(data?.data);
+        // });
+    }
     return (
         <Modal
             {...props}
@@ -101,53 +121,15 @@ function MyVerticallyCenteredModal(props) {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Add A Picture
+                    Do you want to delete this product?
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Video</Form.Label>
-                        <Form.Control type="file" placeholder="Enter email"/>
-                        <Form.Text className="text-muted">
-                            You are replacing the current video with the one you are about to upload.
-                        </Form.Text>
-                    </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Submit
+                <Row>
+                    <Button variant="warning" className="text-center" onClick={handleDelete}>
+                        Delete
                     </Button>
-                </Form>
-            </Modal.Body>
-
-        </Modal>
-    );
-}
-function PictureDeleteModal(props) {
-    return (
-        <Modal
-            {...props}
-            size="md"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-        >
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                    About to delete a picture
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Video</Form.Label>
-                        <Form.Control type="file" placeholder="Enter email"/>
-                        <Form.Text className="text-muted" hidden={true}>
-                            You are replacing the current video with the one you are about to upload.
-                        </Form.Text>
-                    </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
-                </Form>
+                </Row>
             </Modal.Body>
 
         </Modal>
