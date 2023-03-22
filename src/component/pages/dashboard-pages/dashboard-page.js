@@ -3,6 +3,7 @@ import RootMenu from "../../menu/root-menu";
 import TopBar from "../../top-bar/top-bar";
 import {Outlet, useNavigate} from "react-router-dom";
 import userLoginStore from "../../core/store/user.account.store";
+import "./dashboard.page.css"
 
 export default function DashboardPage(){
     const navigate = useNavigate()
@@ -19,11 +20,12 @@ export default function DashboardPage(){
                     <TopBar></TopBar>
                 </Col>
             </Row>
-            <Row style={{height:"100%"}}>
-                <Col md="3" style={{backgroundColor: "#fff", height: "100%"}}>
+            <Row >
+                <Col md={3}>
                     <RootMenu></RootMenu>
                 </Col>
-                <Col md="9" className="p-2" style={{backgroundColor: "#e9e9e9"}}>
+
+                <Col  className="content " style={{backgroundColor: "#e9e9e9",height:"100vh"}}>
                     <Outlet></Outlet>
                 </Col>
             </Row>

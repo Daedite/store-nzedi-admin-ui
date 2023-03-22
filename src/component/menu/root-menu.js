@@ -1,67 +1,42 @@
 import {Card, Col, Container, Nav, Navbar, NavDropdown, Row} from "react-bootstrap";
 import { FaHouseUser, FaUserAlt, FaVideo} from "react-icons/fa";
 import './root-menu.css';
+import {BiCartAlt, BiCategory, BiSupport} from "react-icons/bi";
+import NavigatorTab from "./navigator.tab";
+import {useNavigate} from "react-router-dom";
+
 
 export default function RootMenu(){
+    const navigate = useNavigate()
+    const handleClick = (event,url) =>{
+        event.preventDefault()
 
+        getChildrend()
+        event.target.className = "active"
+        navigate(url)
+    }
+    const getChildrend = () => {
+        let elements = document.getElementsByClassName("sidebar")
+        for (const element of elements[0].childNodes) {
+            element.classList.remove("active")
+        }
+    }
     return(
-        < >
-            <Container >
-            <Navbar className="mt-2 rootBTN" bg="light">
-                <Container>
-                    <Row>
-                        <Col md="3">
-                            <FaHouseUser style={{fontSize:'30px'}}/>
-                        </Col>
-                        <Col className="my-1" md="9">
-                            <Navbar.Brand className="mx-3" href="/home">Home</Navbar.Brand>
-                        </Col>
-                    </Row>
-                </Container>
-            </Navbar>
-            <br />
-            <Navbar bg="light" className="rootBTN">
-                <Container>
-                    <Row>
-                        <Col md="3">
-                            <FaUserAlt style={{fontSize:'30px'}}/>
-                        </Col>
-                        <Col className="my-1" md="9">
-                            <Navbar.Brand className="mx-3" href="/home/product">Product</Navbar.Brand>
-                        </Col>
-                    </Row>
-                </Container>
-            </Navbar>
-            <br />
-            <Navbar bg="white" className="rootBTN">
-                <Container>
-                    <Row>
-                        <Col md="3">
-                            <FaVideo style={{fontSize:'30px'}}/>
-                        </Col>
-                        <Col className="my-1" md="9">
-                            <Navbar.Brand className="mx-3" href="/home/service">Service</Navbar.Brand>
-                        </Col>
-                    </Row>
-                </Container>
-            </Navbar>
-            <br />
-            <Navbar bg="white" >
-                <Container>
-                    <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">
-                            Another action
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">
-                            Separated link
-                        </NavDropdown.Item>
-                    </NavDropdown>
-                </Container>
-            </Navbar>
-            </Container>
+        <>
+            <div className="sidebar">
+                <a  onClick={e => handleClick(e,"/home")} >
+                    <i> <FaHouseUser className="mx-2 pb-1" style={{fontSize:'20px'}}/>
+                    </i>Home</a>
+                <a onClick={e => handleClick(e, "/home/product")} ><i>
+                    <BiCartAlt className="mx-2 pb-1" style={{fontSize:'20px'}}/>
+                </i>Products</a>
+                <a onClick={e => handleClick(e,"/home/service")}>
+                    <i><BiSupport className="mx-2 pb-1" style={{fontSize:'20px'}}/></i>
+                    Services</a>
+                <a href="#" onClick={e => handleClick(e)}>
+                    <i><BiCategory className="mx-2 pb-1" style={{fontSize:'20px'}}/></i>
+                    More</a>
+            </div>
         </>
     )
 }

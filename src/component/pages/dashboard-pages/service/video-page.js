@@ -11,7 +11,7 @@ export default function VideoPage(){
         navigate(url);
     }
     return (
-        <Card>
+        <Card className="m-4">
             <Card.Body>
                 <ButtonToolbar className="justify-content-between" aria-label="Toolbar with Button groups">
                     <h4> Services </h4>

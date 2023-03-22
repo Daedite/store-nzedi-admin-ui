@@ -2,18 +2,16 @@ import {Card, Col, Container, Row} from "react-bootstrap";
 import Example from "../charts/line-chart";
 import PieChartSegment from "../charts/pie-chart-segment";
 import CardHeader from "react-bootstrap/CardHeader";
-import {Text} from "recharts";
-import { FaDownload }from "react-icons/fa";
-import  "./landing-page.css"
-const cardData = [
-    {
+import {FaDownload} from "react-icons/fa";
+import "./landing-page.css"
 
-    }
+const cardData = [
+    {}
 ]
-export default function LandingPage(){
+export default function LandingPage() {
     return (
         <Container>
-            <Row className="mb-2" style={{height:"100px"}}>
+            <Row className=" m-4" style={{height: "30%"}}>
                 <Col>
 
                     <Card>
@@ -25,7 +23,7 @@ export default function LandingPage(){
                             </Col>
                             <Col md={4} className=" text-center m-auto mr-1">
                                 <div className="purpleCardIcon ">
-                                    <FaDownload  />
+                                    <FaDownload/>
                                 </div>
 
                             </Col>
@@ -45,7 +43,7 @@ export default function LandingPage(){
                             </Col>
                             <Col md={4} className=" text-center m-auto mr-1">
                                 <div className="purpleCardIcon ">
-                                    <FaDownload  />
+                                    <FaDownload/>
                                 </div>
 
                             </Col>
@@ -65,7 +63,7 @@ export default function LandingPage(){
                             </Col>
                             <Col md={4} className=" text-center m-auto mr-1">
                                 <div className="purpleCardIcon ">
-                                    <FaDownload  />
+                                    <FaDownload/>
                                 </div>
 
                             </Col>
@@ -85,7 +83,7 @@ export default function LandingPage(){
                             </Col>
                             <Col md={4} className=" text-center m-auto mr-1">
                                 <div className="purpleCardIcon ">
-                                    <FaDownload  />
+                                    <FaDownload/>
                                 </div>
 
                             </Col>
@@ -95,33 +93,29 @@ export default function LandingPage(){
                     </Card>
                 </Col>
             </Row>
-            <Row style={{height:"300px"}}>
-                <Col md={8}>
-                    <Card style={{height:"100%"}}>
+            <Row className="mx-4" style={{height: "300px"}}>
+                <Col md={8} style={{height: "100%"}}>
+                    <Card style={{height: "100%"}}>
                         <CardHeader>
                             <h4>
-                                Video per Category
+                                Product per Category
                             </h4>
                         </CardHeader>
                         <Example/>
                     </Card>
 
                 </Col>
-                <Col md={4}>
-                    <Card style={{height:"100%"}}>
+                <Col md={4} style={{height: "100%"}}>
+                    <Card style={{height: "100%"}}>
                         <CardHeader>
                             <h4>
-                                Video per Category
+                                Products
                             </h4>
                         </CardHeader>
                         <PieChartSegment/>
                     </Card>
-
                 </Col>
             </Row>
-            <Card className="my-2">
-                <Card.Body>This is the dashboard landing page.</Card.Body>
-            </Card>
         </Container>
     );
 }
