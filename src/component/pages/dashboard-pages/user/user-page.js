@@ -1,11 +1,10 @@
 import {Button, ButtonToolbar, Card, InputGroup} from "react-bootstrap";
 import {HiFolderAdd} from "react-icons/hi";
-import VideoTable from "../service/video-component/video-table";
 import React from "react";
-import ProductTable from "./product-components/product-table";
 import {useNavigate} from "react-router-dom";
+import UserTable from "./user.component/user-table";
 
-export default function ProductPage(){
+export default function UserPage(){
     const navigate = useNavigate();
     const createVideoHandler = () => {
         let url = "/home/product-create";
@@ -23,7 +22,7 @@ export default function ProductPage(){
                     </InputGroup>
                 </ButtonToolbar>
             </Card.Body>
-            <ProductTable/>
+            <UserTable/>
         </Card>
     );
 }

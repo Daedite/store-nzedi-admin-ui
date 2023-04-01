@@ -13,9 +13,10 @@ import ViewVideoDetail from "./component/pages/dashboard-pages/service/view-vide
 import VideoCreateForm from "./component/pages/dashboard-pages/service/video-component/video-create-form";
 import ProfilePage from "./component/profile/profile-page";
 import Registration from "./component/user/register/Registration";
-import ProductCreateForm from "./component/pages/dashboard-pages/product/user-components/product-create-form";
-import ProductViewDetail from "./component/pages/dashboard-pages/product/user-components/product-view-detail";
-import AddPicture from "./component/pages/dashboard-pages/product/user-components/product-image/add-product-image";
+import ProductCreateForm from "./component/pages/dashboard-pages/product/product-components/product-create-form";
+import ProductViewDetail from "./component/pages/dashboard-pages/product/product-components/product-view-detail";
+import AddPicture from "./component/pages/dashboard-pages/product/product-components/product-image/add-product-image";
+import UserPage from "./component/pages/dashboard-pages/user/user-page";
 
 const router = createBrowserRouter([
     {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
             {
                 path: "product",
                 element: < ProductPage/>
+            },
+            {
+                path: "user",
+                element: < UserPage/>
             },
             {
                 path: "service",

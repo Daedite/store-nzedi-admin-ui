@@ -1,3 +1,7 @@
 .empty-input{
     border-color:red
 }
+
+.user-image:hover{
+    opacity: 80%;
+}
